@@ -16,7 +16,7 @@
 3. **GLIM 실행**
 ``` ros2 run glim_ros glim_rosbag {dataset_path}```
 
-##sCPU전용 SLAM 시스템 구현
+## CPU전용 SLAM 시스템 구현
 **수정 내용**
 GPU 의존성을 제거하고 CPU 전용으로 SLAM 시스템이 작동하도록 설정했습니다.
 '/install/glim/share/glim/config/cofnig.json' 파일에서 아래 항목을 수정했습니다.
@@ -32,7 +32,7 @@ GPU 의존성을 제거하고 CPU 전용으로 SLAM 시스템이 작동하도록
 option(BUILD_WITH_CUDA "Enable CUDA support" OFF)
 ```
 
-##모노/스테레오 이미지 기반 SLAM 실현s
+## 모노/스테레오 이미지 기반 SLAM 실현s
 모노/스테레오 카메라에서 제공하는 시각 데이터만을 이용하여 SLAM 시스템을 구현했습니다. LiDAR나 IMU추가 센서를 사용하지 않고도 시각적 정보만으로 카메라의 움직임을 추적하였습니다. OpenCV 기반의 특징 검출 및 매칭을 활용하여 프레임 간 움직임을 계산하며, Eigen을 사용하여 카메라 위치를 표현합니다.
 코드는 /src/glim/src/glim/src/odometry/ 경로에서 async_odometry_estimation.cpp를 수정하고,odometry_estimation_image.cpp를 추가했습니다.
 Async_odometry_estimation.cpp 에서images 큐에 존재하는 이미지 데이터를 process_image 함수를 통해 현재 카메라 pose를 추적하고, Callbacks::on_update_frames 콜백 함수로 카메라 pose를 시각화 합니다.
