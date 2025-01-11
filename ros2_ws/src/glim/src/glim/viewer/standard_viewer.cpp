@@ -216,11 +216,9 @@ void StandardViewer::set_callbacks() {
   OdometryEstimationCallbacks::on_update_frames.add([this](const std::vector<EstimationFrame::ConstPtr>& frames) {
     invoke([this, frames] {
       auto viewer = guik::LightViewer::instance();
-      std::cout << "update frames" << std::endl;
       for (const auto& frame : frames) {
         const Eigen::Isometry3f pose = resolve_pose(frame);
         odometry_poses[frame->id] = pose;
-        //std::cout << pose.matrix() << std::endl;
 
         viewer->update_drawable(
           "frame_coord_" + std::to_string(frame->id),
@@ -242,8 +240,6 @@ void StandardViewer::set_callbacks() {
       for (const auto& keyframe : keyframes) {
         const Eigen::Isometry3f pose = resolve_pose(keyframe);
         odometry_poses[keyframe->id] = pose;
-        std::cout << "pose.matrix()" << std::endl;
-        //std::cout << pose.matrix() << std::endl;
 
         const std::string name = "odometry_keyframe_" + std::to_string(keyframe->id);
         auto drawable = viewer->find_drawable(name);

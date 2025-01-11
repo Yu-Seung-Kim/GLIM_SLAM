@@ -62,8 +62,6 @@ void AsyncOdometryEstimation::get_results(std::vector<EstimationFrame::ConstPtr>
 }
 
 void AsyncOdometryEstimation::run() {
-  //test
-  logger->info("I'm in RUN");
   double last_imu_time = enable_imu ? 0.0 : std::numeric_limits<double>::max();
   std::deque<std::pair<double, cv::Mat>> images;
   std::deque<PreprocessedFrame::Ptr> raw_frames;
@@ -99,7 +97,6 @@ void AsyncOdometryEstimation::run() {
     }
     // Camera
     while (!images.empty()) {
-      logger->info("image");
       if (!end_of_sequence && images.front().first > last_imu_time) {
         logger->debug("waiting for IMU data (image_time={:.6f}, last_imu_time={:.6f})", images.front().first, last_imu_time);
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -135,7 +132,6 @@ void AsyncOdometryEstimation::run() {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
         break;
       }
-      logger->info("raw_image");
 
       const auto& frame = raw_frames.front();
       std::vector<EstimationFrame::ConstPtr> marginalized;

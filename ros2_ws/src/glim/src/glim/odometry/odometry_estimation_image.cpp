@@ -53,12 +53,12 @@ Eigen::Isometry3d process_images(const cv::Mat& last_image, const cv::Mat& curre
     match_features(descriptors1, descriptors2, matches);
 
     if (matches.empty()) {
-        throw std::runtime_error("No matches found between images.");
+        throw std::runtime_error("No matches");
     }
 
     Eigen::Isometry3d relative_pose = estimate_pose(keypoints1, keypoints2, matches);
     return last_pose * relative_pose;
 }
 
-}  // namespace glim
+}
 
