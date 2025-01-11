@@ -42,10 +42,15 @@ LiDAR나 IMU추가 센서를 사용하지 않고도 시각적 정보만으로 �
 ---
 
 **코드 수정 내용**
+
 코드는 '/src/glim/src/glim/src/odometry/' 경로에서 async_odometry_estimation.cpp를 수정하고,odometry_estimation_image.cpp를 추가했습니다.
+
 **async_odometry_estimation.cpp**
+
 async_odometry_estimation.cpp 에서images 큐에 존재하는 이미지 데이터를 process_image 함수를 통해 현재 카메라 pose를 추적하고, Callbacks::on_update_frames 콜백 함수로 카메라 pose를 시각화 합니다.
+
 **odometry_estimation_image.cpp**
+
 odometry_estimation_image.cpp는 process_image 함수를 포함하고 있으며 process_image 함수는 이전 프레임, 현재 프레임, 이전 카메라 pose를 입력 받아 현재 카메라 pose를 리턴합니다.
 현재 카메라 pose를 추적하기 위해 이전 프레임과 현재 프레임에서 ORB 특징점 검출기를 이용하여 특징점을 검출하고 매칭합니다. 매칭된 특징점을 이용하여 essential_matrix를 ransac으로 계산한뒤 카메라의 회전과 병진 성분을 추출합니다. recoverPose를 통해 두 프레임 간 상대적인 카메라 변환을 복구합니다. 이전 pose와 복구된 상대적 변환을 결합하여 현재 pose를 계산합니다.
 
